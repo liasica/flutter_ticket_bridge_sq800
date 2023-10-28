@@ -17,6 +17,7 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   String _platformVersion = 'Unknown';
+  int _fd = 0;
   final _ticketBridgePlugin = TicketBridge();
 
   @override
@@ -71,6 +72,46 @@ class _MyAppState extends State<MyApp> {
                   print(result);
                 },
                 child: const Text('getAllSerialDevices'),
+              ),
+              TextButton(
+                onPressed: () async {
+                  final result = await _ticketBridgePlugin.getAllDevicesPath();
+                  print(result);
+                },
+                child: const Text('getAllDevicesPath'),
+              ),
+              TextButton(
+                onPressed: () async {
+                  final result = await _ticketBridgePlugin.getSdkVersion();
+                  print(result);
+                },
+                child: const Text('getSdkVersion'),
+              ),
+              TextButton(
+                onPressed: () async {
+                  final result = await _ticketBridgePlugin.openPort('/dev/ttyS0', baudRate: 9600);
+                  print('端口打开结果: result = $result');
+                  if (result > -1) {
+                    setState(() {
+                      _fd = result;
+                    });
+                  }
+                },
+                child: const Text('openPort'),
+              ),
+              TextButton(
+                onPressed: () async {
+                  final result = await _ticketBridgePlugin.releasePort(_fd);
+                  print('释放结果: fd = $_fd, result = $result');
+                },
+                child: const Text('releasePort'),
+              ),
+              TextButton(
+                onPressed: () async {
+                  final result = await _ticketBridgePlugin.cut(_fd, 0, 1, 2, 10);
+                  print('切票结果: fd = $_fd, result = $result');
+                },
+                child: const Text('cut'),
               ),
             ],
           ),

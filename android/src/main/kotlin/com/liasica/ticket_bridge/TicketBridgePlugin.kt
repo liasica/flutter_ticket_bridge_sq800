@@ -34,6 +34,8 @@ class TicketBridgePlugin : FlutterPlugin, MethodCallHandler {
             "getSdkVersion" -> getSdkVersion(result)
             "openPort" -> openPort(call, result)
             "releasePort" -> releasePort(call, result)
+            "cut" -> cut(call, result)
+            "getModuleStatus" -> getModuleStatus(call, result)
             else -> result.notImplemented()
         }
     }
@@ -59,16 +61,34 @@ class TicketBridgePlugin : FlutterPlugin, MethodCallHandler {
     }
 
     private fun openPort(call: MethodCall, result: Result) {
-        val portName = call.argument<String>("portName")
+        val devPath = call.argument<String>("devPath")
         val baudRate = call.argument<Int>("baudRate") ?: 9600
-        result.success(ticketModule.dgOpenPort(portName, baudRate))
+        result.success(ticketModule.dgOpenPort(devPath, baudRate))
     }
+
     private fun releasePort(call: MethodCall, result: Result) {
         val fd = call.argument<Int>("fd") ?: 0
         result.success(ticketModule.dgReleasePort(fd))
     }
 
     private fun cut(call: MethodCall, result: Result) {
-        
+        val args = call.arguments as HashMap<*, *>
+        result.success(
+            ticketModule.dgCutTicket(
+                args["fd"] as Int,
+                args["addr"] as Int,
+                args["type"] as Int,
+                args["size"] as Int,
+                args["timeout"] as Int
+            )
+        )
+    }
+
+    private fun getModuleStatus(call: MethodCall, result: Result) {
+        val args = call.arguments as HashMap<*, *>
+        val fd = args["fd"] as Int
+        val addr = args["addr"] as Int
+        val type = args["type"] as Int
+        result.success(ticketModule.dgGetModuleStatus(fd, addr, type))
     }
 }
