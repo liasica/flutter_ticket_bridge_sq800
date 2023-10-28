@@ -31,6 +31,9 @@ class TicketBridgePlugin : FlutterPlugin, MethodCallHandler {
             "getPlatformVersion" -> getPlatformVersion(result)
             "getAllSerialDevices" -> getAllSerialDevices(result)
             "getAllDevicesPath" -> getAllDevicesPath(result)
+            "getSdkVersion" -> getSdkVersion(result)
+            "openPort" -> openPort(call, result)
+            "releasePort" -> releasePort(call, result)
             else -> result.notImplemented()
         }
     }
@@ -49,5 +52,23 @@ class TicketBridgePlugin : FlutterPlugin, MethodCallHandler {
 
     private fun getAllDevicesPath(result: Result) {
         result.success(ticketModule.allDevicesPath.asList())
+    }
+
+    private fun getSdkVersion(result: Result) {
+        result.success(ticketModule.dgGetSdkVersion())
+    }
+
+    private fun openPort(call: MethodCall, result: Result) {
+        val portName = call.argument<String>("portName")
+        val baudRate = call.argument<Int>("baudRate") ?: 9600
+        result.success(ticketModule.dgOpenPort(portName, baudRate))
+    }
+    private fun releasePort(call: MethodCall, result: Result) {
+        val fd = call.argument<Int>("fd") ?: 0
+        result.success(ticketModule.dgReleasePort(fd))
+    }
+
+    private fun cut(call: MethodCall, result: Result) {
+        
     }
 }
