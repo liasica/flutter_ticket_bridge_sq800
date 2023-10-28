@@ -57,4 +57,13 @@ class MethodChannelTicketBridge extends TicketBridgePlatform {
       'timeout': timeout,
     });
   }
+
+  @override
+  Future<int> getModuleStatus(int fd, int addr, int query) async {
+    return await methodChannel.invokeMethod('cut', {
+      'fd': fd,
+      'addr': addr,
+      'query': query,
+    });
+  }
 }

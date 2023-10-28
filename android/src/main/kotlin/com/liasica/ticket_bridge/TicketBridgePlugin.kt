@@ -36,6 +36,14 @@ class TicketBridgePlugin : FlutterPlugin, MethodCallHandler {
             "releasePort" -> releasePort(call, result)
             "cut" -> cut(call, result)
             "getModuleStatus" -> getModuleStatus(call, result)
+            "writeConfigData" -> writeConfigData(call, result)
+            "readConfigData" -> readConfigData(call, result)
+            "resetKnife" -> resetKnife(call, result)
+            "resetPaperJam" -> resetPaperJam(call, result)
+            "writePort" -> writePort(call, result)
+            "readPort" -> readPort(call, result)
+            "feed" -> feed(call, result)
+            "ctrlPeripheral" -> ctrlPeripheral(call, result)
             else -> result.notImplemented()
         }
     }
@@ -88,7 +96,74 @@ class TicketBridgePlugin : FlutterPlugin, MethodCallHandler {
         val args = call.arguments as HashMap<*, *>
         val fd = args["fd"] as Int
         val addr = args["addr"] as Int
-        val type = args["type"] as Int
-        result.success(ticketModule.dgGetModuleStatus(fd, addr, type))
+        val query = args["query"] as Int
+        result.success(ticketModule.dgGetModuleStatus(fd, addr, query))
+    }
+
+    private fun writeConfigData(call: MethodCall, result: Result) {
+        val args = call.arguments as HashMap<*, *>
+        val fd = args["fd"] as Int
+        val addr = args["addr"] as Int
+        val key = args["key"] as Int
+        val value = args["value"] as Int
+        result.success(ticketModule.dgWriteConfigData(fd, addr, key, value))
+    }
+
+    private fun readConfigData(call: MethodCall, result: Result) {
+        val args = call.arguments as HashMap<*, *>
+        val fd = args["fd"] as Int
+        val addr = args["addr"] as Int
+        val key = args["key"] as Int
+        var value: Int = -1
+        ticketModule.dgReadConfigData(fd, addr, key, value)
+        result.success(value)
+    }
+
+    private fun resetKnife(call: MethodCall, result: Result) {
+        val args = call.arguments as HashMap<*, *>
+        val fd = args["fd"] as Int
+        val addr = args["addr"] as Int
+        result.success(ticketModule.dgResetKnife(fd, addr))
+    }
+
+    private fun resetPaperJam(call: MethodCall, result: Result) {
+        val args = call.arguments as HashMap<*, *>
+        val fd = args["fd"] as Int
+        val addr = args["addr"] as Int
+        result.success(ticketModule.dgResetPaperJam(fd, addr))
+    }
+
+    private fun writePort(call: MethodCall, result: Result) {
+        val args = call.arguments as HashMap<*, *>
+        val fd = args["fd"] as Int
+        val data = args["data"] as ByteArray
+        val len = args["len"] as Int
+        result.success(ticketModule.dgWritePort(fd, data, len))
+    }
+
+    private fun readPort(call: MethodCall, result: Result) {
+        val args = call.arguments as HashMap<*, *>
+        val fd = args["fd"] as Int
+        val len = args["len"] as Int
+        result.success(ticketModule.dgReadPort(fd, len))
+    }
+
+    private fun feed(call: MethodCall, result: Result) {
+        val args = call.arguments as HashMap<*, *>
+        val fd = args["fd"] as Int
+        val addr = args["addr"] as Int
+        val direction = args["direction"] as Int
+        val size = args["size"] as Int
+        val timeout = args["timeout"] as Int
+        result.success(ticketModule.dgFeedTicket(fd, addr, direction, size, timeout))
+    }
+
+    private fun ctrlPeripheral(call: MethodCall, result: Result) {
+        val args = call.arguments as HashMap<*, *>
+        val fd = args["fd"] as Int
+        val addr = args["addr"] as Int
+        val peripheral = args["peripheral"] as Int
+        val duration = args["duration"] as Int
+        result.success(ticketModule.dgCtrlPeripheral(fd, addr, peripheral, duration))
     }
 }

@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 import 'package:plugin_platform_interface/plugin_platform_interface.dart';
 
 import 'ticket_bridge_method_channel.dart';
@@ -44,28 +46,62 @@ abstract class TicketBridgePlatform extends PlatformInterface {
   }
 
   /// 打开串口
-  /// @param devPath 串口设备路径
-  /// @param baudRate 波特率
-  /// @return 串口文件描述符, -1:失败
   Future<int> openPort(String devPath, int baudRate) {
     throw UnimplementedError('devPath() has not been implemented.');
   }
 
   /// 关闭串口
-  /// @param fd 串口文件描述符
-  /// @return 0:成功 -1:失败
   Future<int> releasePort(int fd) {
     throw UnimplementedError('releasePort() has not been implemented.');
   }
 
   /// 切票
-  /// @param fd 串口文件描述符
-  /// @param addr 出票机机地址
-  /// @param type 票长模式 1:英寸 2:毫米
-  /// @param size 票长
-  /// @param timeout 超时时间
-  /// @return 0:成功 1:无票 2:出票口有票 3:切刀错误 4:卡纸
   Future<int> cut(int fd, int addr, int type, int size, int timeout) {
     throw UnimplementedError('cut() has not been implemented.');
+  }
+
+  /// 查询出票模块状态
+  Future<int> getModuleStatus(int fd, int addr, int query) {
+    throw UnimplementedError('getModuleStatus() has not been implemented.');
+  }
+
+  /// 写非易失型设备参数
+  Future<int> writeConfigData(int fd, int addr, int key, int value) {
+    throw UnimplementedError('writeConfigData() has not been implemented.');
+  }
+
+  /// 读非易失型设备参数
+  Future<int> readConfigData(int fd, int addr, int key) {
+    throw UnimplementedError('readConfigData() has not been implemented.');
+  }
+
+  /// 重置刀头
+  Future<int> resetKnife(int fd, int addr) {
+    throw UnimplementedError('resetKnife() has not been implemented.');
+  }
+
+  /// 重置卡纸
+  Future<int> resetPaperJam(int fd, int addr) {
+    throw UnimplementedError('resetPaperJam() has not been implemented.');
+  }
+
+  /// 发送数据
+  Future<int> writePort(int fd, Uint8List data, int len) {
+    throw UnimplementedError('writePort() has not been implemented.');
+  }
+
+  /// 接收数据
+  Future<int> readPort(int fd, int len) {
+    throw UnimplementedError('readPort() has not been implemented.');
+  }
+
+  /// 进退票
+  Future<int> feed(int fd, int addr, int direction, int size, int timeout) {
+    throw UnimplementedError('feed() has not been implemented.');
+  }
+
+  /// 控制外设
+  Future<int> ctrlPeripheral(int fd, int addr, int peripheral, int duration) {
+    throw UnimplementedError('ctrlPeripheral() has not been implemented.');
   }
 }
