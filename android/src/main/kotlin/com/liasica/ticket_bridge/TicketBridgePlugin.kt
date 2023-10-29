@@ -114,9 +114,7 @@ class TicketBridgePlugin : FlutterPlugin, MethodCallHandler {
         val fd = args["fd"] as Int
         val addr = args["addr"] as Int
         val key = args["key"] as Int
-        var value: Int = -1
-        ticketModule.dgReadConfigData(fd, addr, key, value)
-        result.success(value)
+        result.success(ticketModule.dgReadConfigData(fd, addr, key, 0))
     }
 
     private fun resetKnife(call: MethodCall, result: Result) {
@@ -158,7 +156,7 @@ class TicketBridgePlugin : FlutterPlugin, MethodCallHandler {
         result.success(ticketModule.dgFeedTicket(fd, addr, direction, size, timeout))
     }
 
-    private fun ctrlPeripheral(call: MethodCall, result: Result) {
+    private fun controlPeripheral(call: MethodCall, result: Result) {
         val args = call.arguments as HashMap<*, *>
         val fd = args["fd"] as Int
         val addr = args["addr"] as Int

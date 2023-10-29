@@ -109,9 +109,23 @@ class _MyAppState extends State<MyApp> {
               TextButton(
                 onPressed: () async {
                   final result = await _ticketBridgePlugin.cut(_fd, 0, 1, 2, 10);
-                  print('切票结果: fd = $_fd, result = $result');
+                  print('切票结果: result = $result');
                 },
                 child: const Text('cut'),
+              ),
+              TextButton(
+                onPressed: () async {
+                  final result = await _ticketBridgePlugin.getModuleStatus(_fd, 0, 5);
+                  print('出票模块状态: result = $result');
+                },
+                child: const Text('getModuleStatus'),
+              ),
+              TextButton(
+                onPressed: () async {
+                  final result = await _ticketBridgePlugin.readConfigData(_fd, 0, 5);
+                  print('设置值: result = $result');
+                },
+                child: const Text('readConfigData'),
               ),
             ],
           ),

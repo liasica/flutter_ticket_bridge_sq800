@@ -91,7 +91,7 @@ abstract class TicketBridgePlatform extends PlatformInterface {
   }
 
   /// 接收数据
-  Future<int> readPort(int fd, int len) {
+  Future<Uint8List> readPort(int fd, int len) {
     throw UnimplementedError('readPort() has not been implemented.');
   }
 
@@ -101,7 +101,7 @@ abstract class TicketBridgePlatform extends PlatformInterface {
   }
 
   /// 控制外设
-  Future<int> ctrlPeripheral(int fd, int addr, int peripheral, int duration) {
-    throw UnimplementedError('ctrlPeripheral() has not been implemented.');
+  Future<int> controlPeripheral(int fd, int addr, int peripheral, int duration) {
+    throw UnimplementedError('controlPeripheral() has not been implemented.');
   }
 }

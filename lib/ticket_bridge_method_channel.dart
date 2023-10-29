@@ -66,4 +66,77 @@ class MethodChannelTicketBridge extends TicketBridgePlatform {
       'query': query,
     });
   }
+
+  @override
+  Future<int> writeConfigData(int fd, int addr, int key, int value) async {
+    return await methodChannel.invokeMethod('writeConfigData', {
+      'fd': fd,
+      'addr': addr,
+      'key': key,
+      'value': value,
+    });
+  }
+
+  @override
+  Future<int> readConfigData(int fd, int addr, int key) async {
+    return await methodChannel.invokeMethod('readConfigData', {
+      'fd': fd,
+      'addr': addr,
+      'key': key,
+    });
+  }
+
+  @override
+  Future<int> resetKnife(int fd, int addr) async {
+    return await methodChannel.invokeMethod('resetKnife', {
+      'fd': fd,
+      'addr': addr,
+    });
+  }
+
+  @override
+  Future<int> resetPaperJam(int fd, int addr) async {
+    return await methodChannel.invokeMethod('resetPaperJam', {
+      'fd': fd,
+      'addr': addr,
+    });
+  }
+
+  @override
+  Future<int> writePort(int fd, Uint8List data, int len) async {
+    return await methodChannel.invokeMethod('writePort', {
+      'fd': fd,
+      'data': data,
+      'len': len,
+    });
+  }
+
+  @override
+  Future<Uint8List> readPort(int fd, int len) async {
+    return await methodChannel.invokeMethod('readPort', {
+      'fd': fd,
+      'len': len,
+    });
+  }
+
+  @override
+  Future<int> feed(int fd, int addr, int direction, int size, int timeout) async {
+    return await methodChannel.invokeMethod('feed', {
+      'fd': fd,
+      'addr': addr,
+      'direction': direction,
+      'size': size,
+      'timeout': timeout,
+    });
+  }
+
+  @override
+  Future<int> controlPeripheral(int fd, int addr, int peripheral, int duration) async {
+    return await methodChannel.invokeMethod('controlPeripheral', {
+      'fd': fd,
+      'addr': addr,
+      'peripheral': peripheral,
+      'duration': duration,
+    });
+  }
 }
