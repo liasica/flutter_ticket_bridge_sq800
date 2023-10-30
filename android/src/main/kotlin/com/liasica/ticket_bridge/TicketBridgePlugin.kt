@@ -43,7 +43,7 @@ class TicketBridgePlugin : FlutterPlugin, MethodCallHandler {
             "writePort" -> writePort(call, result)
             "readPort" -> readPort(call, result)
             "feed" -> feed(call, result)
-            "ctrlPeripheral" -> ctrlPeripheral(call, result)
+            "ctrlPeripheral" -> controlPeripheral(call, result)
             else -> result.notImplemented()
         }
     }
