@@ -60,7 +60,7 @@ class MethodChannelTicketBridge extends TicketBridgePlatform {
 
   @override
   Future<int> getModuleStatus(int fd, int addr, int query) async {
-    return await methodChannel.invokeMethod('cut', {
+    return await methodChannel.invokeMethod('getModuleStatus', {
       'fd': fd,
       'addr': addr,
       'query': query,
