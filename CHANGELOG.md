@@ -1,3 +1,7 @@
+## 1.1.1
+
+* 发布新版本
+
 ## 1.0.1-hotfix.1
 
 * 修复`getModuleStatus`方法

@@ -1,6 +1,6 @@
 name: ticket_bridge
 description: SQ800出票模块flutter插件
-version: 1.0.1-hotfix.1
+version: 1.1.1
 homepage: https://github.com/liasica/flutter_ticket_bridge_sq800
 
 environment:
